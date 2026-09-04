@@ -1,0 +1,24 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www/html
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_KEY: base64:dGVzdGtleWZvcmZvb2RyZXNjdWVwbGF0Zm9ybQ==
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /var/www/html/database/database.sqlite
+    command: >
+      sh -c "
+        touch database/database.sqlite &&
+        composer install --no-interaction &&
+        php artisan key:generate --force &&
+        php artisan migrate:fresh --seed --force &&
+        php artisan storage:link &&
+        php artisan serve --host=0.0.0.0 --port=8000
+      "
