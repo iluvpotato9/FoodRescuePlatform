@@ -12,5 +12,5 @@ if errorlevel 1 (
     )
 )
 
-echo Starting FoodBridge at http://127.0.0.1:8000
-php artisan serve --host=127.0.0.1 --port=8000
+echo Starting FoodBridge at http://127.0.0.1:8888
+C:\Users\alzw7\.config\herd\bin\php82\php.exe -S 127.0.0.1:8888 -t public

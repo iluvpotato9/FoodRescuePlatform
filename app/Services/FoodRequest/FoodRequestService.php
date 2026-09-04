@@ -166,14 +166,14 @@ class FoodRequestService
 
                     return $request->fresh()->load([
                         'donation',
-                        'reservations',
+                        'reservation',
                     ]);
         });
     }
 
     public function markDonationReady(Donation $donation): void
     {
-        $donation->reservations()
+        $donation->reservation()
             ->with('foodRequest')
             ->get()
             ->each(function (Reservation $reservation) {
