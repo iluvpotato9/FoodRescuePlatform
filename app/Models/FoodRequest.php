@@ -10,7 +10,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class FoodRequest extends Model
@@ -55,8 +54,5 @@ class FoodRequest extends Model
         return $this->hasOne(Reservation::class, 'request_id');
     }
 
-    public function reservations(): HasMany
-    {
-        return $this->hasMany(Reservation::class, 'request_id');
-    }
+
 }

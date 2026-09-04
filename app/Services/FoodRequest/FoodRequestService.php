@@ -60,12 +60,13 @@ class FoodRequestService
 
     public function find(int $id): FoodRequest
     {
-        return FoodRequest::with(['user', 'donation', 'reservations.donation'])->findOrFail($id);
+        return FoodRequest::with(['user', 'donation', 'reservation.donation'])
+    ->findOrFail($id);
     }
 
     public function listForUser(int $userId): \Illuminate\Database\Eloquent\Collection
     {
-        return FoodRequest::with(['donation', 'reservations.donation'])
+        return FoodRequest::with(['donation', 'reservation.donation'])
             ->where('user_id', $userId)
             ->orderByDesc('created_at')
             ->get();
@@ -73,7 +74,7 @@ class FoodRequestService
 
     public function listApproved(): \Illuminate\Database\Eloquent\Collection
     {
-        return FoodRequest::with(['user', 'reservations'])
+        return FoodRequest::with(['user', 'reservation'])
             ->where('status', 'approved')
             ->orderByDesc('created_at')
             ->get();
@@ -115,17 +116,14 @@ class FoodRequestService
             $donation = Donation::lockForUpdate()
                 ->findOrFail($request->donation_id);
 
-            // Do NOT use isAvailable() here.
-            // This request has already reserved/held its quantity while pending.
+        
             if (! $donation->is_active || $donation->isExpired()) {
                 throw new InvalidArgumentException(
                     'This food item is no longer available.'
                 );
             }
 
-            // availableQuantity() already subtracts ALL pending requests,
-            // including the request currently being approved.
-            // Add this request's own pending quantity back for the approval check.
+        
             $currentAvailable = (float) $donation->availableQuantity();
             $requestQuantity = (float) $request->quantity_requested;
             $effectiveAvailable = $currentAvailable + $requestQuantity;
@@ -147,8 +145,7 @@ class FoodRequestService
                 'reservation_date' => now()->toDateString(),
             ]);
 
-            // If there is no quantity left for NEW requests,
-            // mark the donation as reserved.
+            
             if ($donation->availableQuantity() <= 0) {
                 $donation->update(['status' => 'reserved']);
             }
@@ -167,10 +164,10 @@ class FoodRequestService
                     });
             }
 
-            return $request->fresh()->load([
-                'donation',
-                'reservations',
-            ]);
+                    return $request->fresh()->load([
+                        'donation',
+                        'reservations',
+                    ]);
         });
     }
 
@@ -314,7 +311,7 @@ class FoodRequestService
                 $donation->update(['status' => 'available']);
             }
 
-            if ($foodRequest?->status === 'reserved' && ! $foodRequest->reservations()->exists()) {
+            if ($foodRequest?->status === 'reserved' && ! $foodRequest->reservation()->exists()) {
                 $this->updateStatus($foodRequest, 'release');
             }
         });
