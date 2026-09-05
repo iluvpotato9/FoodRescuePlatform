@@ -173,7 +173,7 @@ class FoodRequestService
 
     public function markDonationReady(Donation $donation): void
     {
-        $donation->reservation()
+        $donation->reservations()
             ->with('foodRequest')
             ->get()
             ->each(function (Reservation $reservation) {

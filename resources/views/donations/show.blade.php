@@ -1,3 +1,9 @@
+{{-- 
+Module: Food Donation Management Module
+Author: Liang Yun Ci (Student ID: 2408076)
+Course: BMIT3173 Integrative Programming
+--}}
+
 @extends('layouts.app')
 
 @section('title', $donation->title . ' - Food Rescue Platform')

@@ -237,6 +237,8 @@ class PlatformTest extends TestCase
 
     public function test_approved_food_is_picked_up_before_beneficiary_schedules_within_three_days(): void
     {
+        Carbon::setTestNow('2026-08-17 10:00:00');
+
         $admin = User::forceCreate([
             'name' => 'Admin',
             'email' => 'flow-admin@example.test',
@@ -320,6 +322,7 @@ class PlatformTest extends TestCase
             ->get('/dashboard')
             ->assertOk()
             ->assertSee('Update quantity and expiry');
+        Carbon::setTestNow();
     }
 
     public function test_donor_listing_uses_food_bank_dropoff_without_requesting_private_address(): void

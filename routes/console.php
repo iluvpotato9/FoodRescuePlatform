@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Module: Food Donation Management Module
+ * Author: Liang Yun Ci (Student ID: 2408076)
+ * Course: BMIT3173 Integrative Programming
+ */
+
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;

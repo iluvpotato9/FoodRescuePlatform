@@ -1,4 +1,14 @@
 <?php
+/**
+ * System: Food Rescue and Community Food Bank Platform
+ * File: Shared API and Inter-Module Web Service Routes
+ * Authors (Group 3):
+ * - Loo Zi Wei (2408082)
+ * - Loo Zhi Yin (2410857)
+ * - Liang Yun Ci (2408076)
+ * - Syed Raiz (2410921)
+ * Course: BMIT3173 Integrative Programming
+ */
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DonationController;

@@ -204,8 +204,9 @@ As required by the BMIT3173 guidelines, each team member implements **two unique
 2. **HTTP Security Hardening Headers Middleware (`SecurityHeadersMiddleware`):** Enforces `X-Frame-Options: SAMEORIGIN/DENY` against clickjacking, `X-Content-Type-Options: nosniff` against MIME sniffing, and strict referrer policy.
 
 ### Module 3: Food Donation Management (Liang Yun Ci - 2408076)
-1. **Cross-Site Request Forgery (CSRF) Protection Middleware:** Synchronizer token validation (`@csrf`) across all donation create, edit, and status modification requests.
-2. **Multi-Layer File Upload Hardening:** Strict MIME-type inspection, image dimension verification, and randomized UUID filename generation stored outside web roots to prevent unrestricted file upload and remote code execution (RCE).
+1. **Cross-Site Request Forgery (CSRF) Protection:** The donation create, update, and delete web forms include Laravel CSRF tokens (`@csrf`) to protect state-changing requests against cross-site request forgery.
+
+2. **Mass Assignment Protection (`$fillable` Allowlist):** The `Donation` model defines an explicit `$fillable` allowlist to restrict which attributes can be assigned through Eloquent mass-assignment operations such as `create()` and `update()`.
 
 ### Module 4: User and Authentication (Syed Raiz - 2410921)
 1. **Dynamic Rate Limiting & Throttling (`throttle:5,1`):** Applied on `/api/register` and `/api/login` with uniform error messages to thwart brute-force password guessing and credential stuffing.
